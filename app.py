@@ -37,6 +37,19 @@ def getLessonsAndDurationsByUPID(id):
     dataFiltered = data[['lesson_name', 'duration_ms']]
     return dataFiltered
 
+def promptCsvOut(df):
+    print(df)
+    outPrompt = [inquirer.List('out', message="Output to csv?", choices=['No', 'Yes'])]
+    out = inquirer.prompt(outPrompt)
+    if out and out['out'] == 'Yes':
+        filePrompt = [inquirer.Text('filename', message="Csv filename (without .csv)")]
+        filename = inquirer.prompt(filePrompt)
+
+        if filename:
+            name = 'outputs/' + filename['filename'] + '.csv'
+            df.to_csv(name, index=False)
+            print("Created " + name)
+
 
 def main():
     print("Welcome to the CLI tool. Press Ctrl+D or type 'exit' to quit.")
@@ -70,7 +83,8 @@ def main():
             ])
             if answer and 'username' in answer:
                 print("Data of username: " + answer['username'])
-                print(getDataByUsername(answer['username']))
+                data = getDataByUsername(answer['username'])
+                promptCsvOut(data)
 
 if __name__ == "__main__":
     main()

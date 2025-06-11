@@ -7,7 +7,7 @@ pd.set_option('display.width', 500)
 
 # Load the CSV file
 df = pd.read_csv('mock_data.csv')
-df_usr = pd.read_csv('sync_user_profiles.csv')
+df_usr = pd.read_csv('inputs/sync_user_profiles.csv')
 
 df['timestamp'] = pd.to_datetime(df['timestamp'])
 df = df.drop(columns=['id', 'lesson_id', 'is_external', 'is_preassessment','lesson_type']) #Exclude columns  

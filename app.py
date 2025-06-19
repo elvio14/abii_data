@@ -5,16 +5,18 @@ pd.set_option('display.max_columns', None)   #Always display all columns
 pd.set_option('display.max_rows', None)    #Always display all rows
 pd.set_option('display.width', 500)
 
-# Load the CSV file
-df = pd.read_csv('mock_data.csv')
+#EDIT THESE ACCORDNINGLY ! ! ! ! !  ! ! ! ! ! !  !  
+start_date = '2025-05-31T23:59:59Z'
+df = pd.read_csv('inputs/mock_data.csv')
 df_usr = pd.read_csv('inputs/sync_user_profiles.csv')
+#! ! ! !! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !  ! ! !! ! ! 
 
 df['timestamp'] = pd.to_datetime(df['timestamp'])
 df = df.drop(columns=['id', 'lesson_id', 'is_external', 'is_preassessment','lesson_type']) #Exclude columns  
-df = df[df['timestamp'] > '2025-05-31T23:59:59Z']   #After May 31st Only
+df = df[df['timestamp'] > start_date]   #After May 31st Only
 
 def getAllData():      
-    return df
+    return df.sort_values(by='cloud_learner_id')
 
 # UPID is User Profile ID
 # CLID is Cloud Learner ID (One per username)
